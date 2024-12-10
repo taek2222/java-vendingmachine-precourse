@@ -1,5 +1,7 @@
 package vendingmachine.controller;
 
+import vendingmachine.domain.AmountHeld;
+import vendingmachine.domain.dto.AmountHeldResponse;
 import vendingmachine.view.InputView;
 import vendingmachine.view.OutputView;
 
@@ -13,6 +15,10 @@ public class VendingmachineController {
     }
 
     public void run() {
-        int input = inputView.readAmountHeld();
+        int inputAmountHeld = inputView.readAmountHeld();
+        AmountHeld amountHeld = new AmountHeld(inputAmountHeld);
+        AmountHeldResponse response = amountHeld.createResponse();
+
+        outputView.printAmountHeld(response);
     }
 }

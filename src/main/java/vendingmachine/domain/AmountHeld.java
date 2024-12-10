@@ -1,7 +1,11 @@
 package vendingmachine.domain;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import vendingmachine.domain.dto.AmountHeldResponse;
+import vendingmachine.domain.dto.CoinResponse;
 
 public class AmountHeld {
 
@@ -9,6 +13,17 @@ public class AmountHeld {
 
     public AmountHeld(int amount) {
         this.coins = createRandomCoins(amount);
+    }
+
+    public AmountHeldResponse createResponse() {
+        List<CoinResponse> coinResponses = new ArrayList<>();
+        for (Map.Entry<Coin, Integer> entry : coins.entrySet()) {
+            coinResponses.add(new CoinResponse(
+                    entry.getKey().getAmount(),
+                    entry.getValue()
+            ));
+        }
+        return new AmountHeldResponse(coinResponses);
     }
 
     private Map<Coin, Integer> createRandomCoins(int amount) {
