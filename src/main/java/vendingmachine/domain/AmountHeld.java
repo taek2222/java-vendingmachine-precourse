@@ -1,9 +1,9 @@
 package vendingmachine.domain;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 import vendingmachine.domain.dto.AmountHeldResponse;
 import vendingmachine.domain.dto.CoinResponse;
 
@@ -12,6 +12,7 @@ public class AmountHeld {
     private final Map<Coin, Integer> coins;
 
     public AmountHeld(int amount) {
+        validatorAmount(amount);
         this.coins = createRandomCoins(amount);
     }
 
@@ -27,7 +28,7 @@ public class AmountHeld {
     }
 
     private Map<Coin, Integer> createRandomCoins(int amount) {
-        HashMap<Coin, Integer> coins = new HashMap<>();
+        Map<Coin, Integer> coins = new TreeMap<>();
 
         while (amount != 0) {
             Coin coin = Coin.generateRandomCoin(amount);
@@ -39,5 +40,11 @@ public class AmountHeld {
             coins.put(coin, coins.get(coin) + 1);
         }
         return coins;
+    }
+
+    private void validatorAmount(int amount) {
+        if (amount % 10 != 0) {
+            throw new IllegalArgumentException();
+        }
     }
 }
