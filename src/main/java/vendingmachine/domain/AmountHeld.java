@@ -1,5 +1,7 @@
 package vendingmachine.domain;
 
+import static vendingmachine.domain.Coin.generateRandomCoin;
+import static vendingmachine.domain.dto.CoinResponse.createCoinResponse;
 import static vendingmachine.global.validation.AmountValidator.validateMultipleOfTen;
 
 import java.util.ArrayList;
@@ -16,7 +18,7 @@ public class AmountHeld {
 
     public AmountHeld(int amount) {
         validateMultipleOfTen(amount);
-        this.coins = createRandomCoins(amount);
+        this.coins = generateRandomCoins(amount);
     }
 
     public ChangeResponse getChange(int changeAmount) {
@@ -30,17 +32,11 @@ public class AmountHeld {
             if (divide < entry.getValue()) { // 남아있는 동전이 더 클 때
                 changeAmount -= divide * entry.getKey().getAmount();
                 coins.put(entry.getKey(), entry.getValue() - divide);
-                coinResponses.add(createCoinResponse(
-                        entry.getKey().getAmount(),
-                        divide
-                ));
+                coinResponses.add(createCoinResponse(entry, divide));
                 continue;
             }
 
-            coinResponses.add(createCoinResponse(
-                    entry.getKey().getAmount(),
-                    entry.getValue()
-            ));
+            coinResponses.add(createCoinResponse(entry));
             coins.put(entry.getKey(), 0);
         }
 
@@ -49,34 +45,27 @@ public class AmountHeld {
 
     public AmountHeldResponse createResponse() {
         List<CoinResponse> coinResponses = new ArrayList<>();
-        for (Map.Entry<Coin, Integer> entry : coins.entrySet()) {
-            coinResponses.add(createCoinResponse(
-                    entry.getKey().getAmount(),
-                    entry.getValue()
-            ));
-        }
+        coins.entrySet().forEach(entry ->
+                coinResponses.add(createCoinResponse(entry)));
+
         return new AmountHeldResponse(coinResponses);
     }
 
-    private CoinResponse createCoinResponse(int amount, int quantity) {
-        return new CoinResponse(
-                amount,
-                quantity
-        );
-    }
-
-    private Map<Coin, Integer> createRandomCoins(int amount) {
+    private Map<Coin, Integer> generateRandomCoins(int amount) {
         Map<Coin, Integer> coins = new TreeMap<>();
 
         while (amount != 0) {
-            Coin coin = Coin.generateRandomCoin(amount);
+            Coin coin = generateRandomCoin(amount);
             amount -= coin.getAmount();
-
-            if (!coins.containsKey(coin)) {
-                coins.put(coin, 0);
-            }
-            coins.put(coin, coins.get(coin) + 1);
+            addRandomCoin(coins, coin);
         }
         return coins;
+    }
+
+    private void addRandomCoin(Map<Coin, Integer> coins, Coin coin) {
+        if (!coins.containsKey(coin)) {
+            coins.put(coin, 0);
+        }
+        coins.put(coin, coins.get(coin) + 1);
     }
 }
