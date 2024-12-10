@@ -20,30 +20,51 @@ public class VendingmachineController {
     }
 
     public void run() {
+        AmountHeld amountHeld = generateAmountHeld();
+        displayAmountHeld(amountHeld);
+
+        VendingMachine machine = generateVendingMachine();
+
+        processPurchases(machine);
+        displayChange(amountHeld, machine);
+    }
+
+    private AmountHeld generateAmountHeld() {
         int inputAmountHeld = inputView.readAmountHeld();
-        AmountHeld amountHeld = new AmountHeld(inputAmountHeld);
+        return new AmountHeld(inputAmountHeld);
+    }
+
+    private void displayAmountHeld(AmountHeld amountHeld) {
         AmountHeldResponse response = amountHeld.createResponse();
-
         outputView.printAmountHeld(response);
+    }
 
+    private VendingMachine generateVendingMachine() {
         String inputProducts = inputView.readProductsInfo();
         List<Product> products = ProductParser.parseProducts(inputProducts);
 
         int inputAmount = inputView.readInputAmount();
-        VendingMachine machine = new VendingMachine(products, inputAmount);
+        return new VendingMachine(products, inputAmount);
+    }
 
+    private void processPurchases(VendingMachine machine) {
         while (true) {
             outputView.printInputAmount(machine.getInputAmount());
 
             if (!machine.isPossiblePurchase()) {
                 break;
             }
-
-            String purchaseProductName = inputView.readPurchaseProductName();
-            Product product = machine.findProductByName(purchaseProductName);
-            machine.purchaseProduct(product);
+            processPurchase(machine);
         }
+    }
 
+    private void processPurchase(VendingMachine machine) {
+        String purchaseProductName = inputView.readPurchaseProductName();
+        Product product = machine.findProductByName(purchaseProductName);
+        machine.purchaseProduct(product);
+    }
+
+    private void displayChange(AmountHeld amountHeld, VendingMachine machine) {
         ChangeResponse responses = amountHeld.getChange(machine.getInputAmount());
         outputView.printChange(responses);
     }
