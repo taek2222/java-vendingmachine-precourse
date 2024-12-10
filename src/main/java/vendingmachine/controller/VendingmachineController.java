@@ -38,6 +38,9 @@ public class VendingmachineController {
                 break;
             }
 
+            String purchaseProductName = inputView.readPurchaseProductName();
+            Product product = machine.findProductByName(purchaseProductName);
+
 
         }
     }

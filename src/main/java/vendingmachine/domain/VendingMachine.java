@@ -20,6 +20,13 @@ public class VendingMachine {
         return inputAmount;
     }
 
+    public Product findProductByName(String name) {
+        return products.stream()
+                .filter(product -> product.isSameName(name))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException());
+    }
+
     private boolean isSoldOut() {
         int count = (int) products.stream()
                 .filter(Product::isNotSoldOut)

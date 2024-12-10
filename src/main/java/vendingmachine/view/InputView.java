@@ -7,7 +7,7 @@ import vendingmachine.global.validation.CommonValidator;
 
 public class InputView {
 
-    public String readPurchaseProduct() {
+    public String readPurchaseProductName() {
         System.out.println("구매할 상품명을 입력해 주세요.");
         return Console.readLine();
     }

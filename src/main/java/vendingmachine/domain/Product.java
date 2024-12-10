@@ -20,6 +20,10 @@ public class Product {
         return quantity != 0;
     }
 
+    public boolean isSameName(String name) {
+        return this.name.equals(name);
+    }
+
     public int getPrice() {
         return price;
     }
