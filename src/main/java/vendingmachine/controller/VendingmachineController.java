@@ -2,6 +2,7 @@ package vendingmachine.controller;
 
 import vendingmachine.domain.AmountHeld;
 import vendingmachine.domain.dto.AmountHeldResponse;
+import vendingmachine.global.util.ProductParser;
 import vendingmachine.view.InputView;
 import vendingmachine.view.OutputView;
 
@@ -22,5 +23,6 @@ public class VendingmachineController {
         outputView.printAmountHeld(response);
 
         String inputProducts = inputView.readProductsInfo();
+        ProductParser.parseProducts(inputProducts);
     }
 }
