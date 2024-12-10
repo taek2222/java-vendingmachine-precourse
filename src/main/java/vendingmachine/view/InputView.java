@@ -7,6 +7,11 @@ import vendingmachine.global.validation.CommonValidator;
 
 public class InputView {
 
+    public String readPurchaseProduct() {
+        System.out.println("구매할 상품명을 입력해 주세요.");
+        return Console.readLine();
+    }
+
     public int readAmountHeld() {
         System.out.println("자판기가 보유하고 있는 금액을 입력해 주세요.");
         String input = Console.readLine();
