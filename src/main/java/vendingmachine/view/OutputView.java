@@ -1,6 +1,10 @@
 package vendingmachine.view;
 
 import static vendingmachine.global.constant.MessageConstant.NEW_LINE;
+import static vendingmachine.global.constant.MessageConstant.OUTPUT_AMOUNT_HELD;
+import static vendingmachine.global.constant.MessageConstant.OUTPUT_CHANGE;
+import static vendingmachine.global.constant.MessageConstant.OUTPUT_COIN_AND_QUANTITY;
+import static vendingmachine.global.constant.MessageConstant.OUTPUT_INPUT_AMOUNT;
 
 import java.util.List;
 import vendingmachine.domain.dto.AmountHeldResponse;
@@ -12,7 +16,7 @@ public class OutputView {
     public void printChange(ChangeResponse response) {
         List<CoinResponse> responses = response.changeResponses();
 
-        System.out.println("잔돈");
+        System.out.println(OUTPUT_CHANGE);
         responses.forEach(this::printCoinAndQuantity);
     }
 
@@ -20,22 +24,22 @@ public class OutputView {
         List<CoinResponse> coinResponses = response.amountHeld();
 
         System.out.println();
-        System.out.println("자판기가 보유한 동전");
+        System.out.println(OUTPUT_AMOUNT_HELD);
         for (CoinResponse coinResponse : coinResponses) {
             printCoinAndQuantity(coinResponse);
         }
     }
 
     private void printCoinAndQuantity(CoinResponse coinResponse) {
-        System.out.printf("%d원 - %d개",
+        System.out.printf(OUTPUT_COIN_AND_QUANTITY.get(
                 coinResponse.coin(),
                 coinResponse.quantity()
-        );
+                ));
         System.out.println();
     }
 
     public void printInputAmount(int amount) {
-        System.out.printf(NEW_LINE.get() + "투입 금액: %d", amount);
+        System.out.printf(NEW_LINE.get() + OUTPUT_INPUT_AMOUNT.get(amount));
         System.out.printf(NEW_LINE.get());
     }
 
