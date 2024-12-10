@@ -20,5 +20,7 @@ public class VendingmachineController {
         AmountHeldResponse response = amountHeld.createResponse();
 
         outputView.printAmountHeld(response);
+
+        String inputProducts = inputView.readProductsInfo();
     }
 }
