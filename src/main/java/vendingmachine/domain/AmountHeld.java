@@ -1,5 +1,7 @@
 package vendingmachine.domain;
 
+import static vendingmachine.global.validation.AmountValidator.validateMultipleOfTen;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -12,7 +14,7 @@ public class AmountHeld {
     private final Map<Coin, Integer> coins;
 
     public AmountHeld(int amount) {
-        validatorAmount(amount);
+        validateMultipleOfTen(amount);
         this.coins = createRandomCoins(amount);
     }
 
@@ -40,11 +42,5 @@ public class AmountHeld {
             coins.put(coin, coins.get(coin) + 1);
         }
         return coins;
-    }
-
-    private void validatorAmount(int amount) {
-        if (amount % 10 != 0) {
-            throw new IllegalArgumentException();
-        }
     }
 }
