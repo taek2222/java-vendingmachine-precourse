@@ -19,4 +19,12 @@ public class InputView {
         System.out.println(NEW_LINE.get() + "상품명과 가격, 수량을 입력해 주세요.");
         return Console.readLine();
     }
+
+    public int readInputAmount() {
+        System.out.println(NEW_LINE.get() + "상품명과 가격, 수량을 입력해 주세요.");
+        String input = Console.readLine();
+
+        CommonValidator.validateIsNumeric(input);
+        return Integer.parseInt(input);
+    }
 }

@@ -30,5 +30,7 @@ public class VendingmachineController {
 
         VendingMachine machine = new VendingMachine(products);
 
+        int inputAmount = inputView.readInputAmount();
+
     }
 }
