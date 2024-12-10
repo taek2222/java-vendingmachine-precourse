@@ -28,9 +28,17 @@ public class VendingmachineController {
         String inputProducts = inputView.readProductsInfo();
         List<Product> products = ProductParser.parseProducts(inputProducts);
 
-        VendingMachine machine = new VendingMachine(products);
-
         int inputAmount = inputView.readInputAmount();
+        VendingMachine machine = new VendingMachine(products, inputAmount);
 
+        while (true) {
+            outputView.printInputAmount(machine.getInputAmount());
+
+            if (!machine.isPossiblePurchase()) {
+                break;
+            }
+
+
+        }
     }
 }

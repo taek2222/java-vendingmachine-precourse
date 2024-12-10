@@ -16,6 +16,14 @@ public class Product {
         this.quantity = quantity;
     }
 
+    public boolean isNotSoldOut() {
+        return quantity != 0;
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
     private void validatorPrice(int price) {
         if (price < 100) {
             throw new IllegalArgumentException();
