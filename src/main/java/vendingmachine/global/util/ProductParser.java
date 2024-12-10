@@ -1,5 +1,7 @@
 package vendingmachine.global.util;
 
+import static vendingmachine.global.constant.ErrorMessage.INVALID_INPUT;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -17,7 +19,7 @@ public class ProductParser {
             Matcher matcher = pattern.matcher(s);
 
             if (!matcher.find() || matcher.groupCount() != 3)
-                throw new IllegalArgumentException();
+                throw new IllegalArgumentException(INVALID_INPUT.get());
 
             String name = matcher.group(1);
             int price = Integer.parseInt(matcher.group(2));

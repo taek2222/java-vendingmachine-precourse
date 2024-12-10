@@ -2,7 +2,6 @@ package vendingmachine.domain;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 import vendingmachine.global.util.RandomUtil;
 
 public enum Coin {
@@ -24,7 +23,7 @@ public enum Coin {
     public static Coin generateRandomCoin(int amount) {
         List<Coin> coins = Arrays.stream(values())
                 .filter(coin -> coin.amount <= amount)
-                .collect(Collectors.toList());
+                .toList();
 
         int randomIndex = RandomUtil.generateListIndexRandomNumber(coins.size());
         return coins.get(randomIndex);

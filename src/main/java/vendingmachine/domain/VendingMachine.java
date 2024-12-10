@@ -1,5 +1,7 @@
 package vendingmachine.domain;
 
+import static vendingmachine.global.constant.ErrorMessage.NOT_FOUND_PRODUCT;
+
 import java.util.List;
 
 public class VendingMachine {
@@ -29,7 +31,7 @@ public class VendingMachine {
         return products.stream()
                 .filter(product -> product.isSameName(name))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException());
+                .orElseThrow(() -> new IllegalArgumentException(NOT_FOUND_PRODUCT.get()));
     }
 
     private boolean isSoldOut() {
