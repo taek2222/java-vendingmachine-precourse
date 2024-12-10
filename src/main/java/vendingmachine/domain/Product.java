@@ -6,7 +6,7 @@ public class Product {
 
     private final String name;
     private final int price;
-    private final int quantity;
+    private int quantity;
 
     public Product(String name, int price, int quantity) {
         validatorPrice(price);
@@ -14,6 +14,10 @@ public class Product {
         this.name = name;
         this.price = price;
         this.quantity = quantity;
+    }
+
+    public void purchaseProduct() {
+        quantity--;
     }
 
     public boolean isNotSoldOut() {

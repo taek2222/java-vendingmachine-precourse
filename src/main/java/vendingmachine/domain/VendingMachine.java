@@ -12,6 +12,11 @@ public class VendingMachine {
         this.inputAmount = inputAmount;
     }
 
+    public void purchaseProduct(Product product) {
+        inputAmount -= product.getPrice();
+        product.purchaseProduct();
+    }
+
     public boolean isPossiblePurchase() {
         return getMinimumPrice() < inputAmount && !isSoldOut();
     }
