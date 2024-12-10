@@ -1,6 +1,9 @@
 package vendingmachine.controller;
 
+import java.util.List;
 import vendingmachine.domain.AmountHeld;
+import vendingmachine.domain.Product;
+import vendingmachine.domain.VendingMachine;
 import vendingmachine.domain.dto.AmountHeldResponse;
 import vendingmachine.global.util.ProductParser;
 import vendingmachine.view.InputView;
@@ -23,6 +26,9 @@ public class VendingmachineController {
         outputView.printAmountHeld(response);
 
         String inputProducts = inputView.readProductsInfo();
-        ProductParser.parseProducts(inputProducts);
+        List<Product> products = ProductParser.parseProducts(inputProducts);
+
+        VendingMachine machine = new VendingMachine(products);
+
     }
 }
