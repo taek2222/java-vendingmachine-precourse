@@ -38,4 +38,8 @@ public class OutputView {
         System.out.printf(NEW_LINE.get() + "투입 금액: %d", amount);
         System.out.printf(NEW_LINE.get());
     }
+
+    public void printErrorMessage(String message) {
+        System.out.println(message);
+    }
 }

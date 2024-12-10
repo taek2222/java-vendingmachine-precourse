@@ -30,8 +30,14 @@ public class VendingmachineController {
     }
 
     private AmountHeld generateAmountHeld() {
-        int inputAmountHeld = inputView.readAmountHeld();
-        return new AmountHeld(inputAmountHeld);
+        while (true) {
+            try {
+                int inputAmountHeld = inputView.readAmountHeld();
+                return new AmountHeld(inputAmountHeld);
+            } catch (IllegalArgumentException e) {
+                outputView.printErrorMessage(e.getMessage());
+            }
+        }
     }
 
     private void displayAmountHeld(AmountHeld amountHeld) {
@@ -40,11 +46,27 @@ public class VendingmachineController {
     }
 
     private VendingMachine generateVendingMachine() {
-        String inputProducts = inputView.readProductsInfo();
-        List<Product> products = ProductParser.parseProducts(inputProducts);
+        List<Product> products = generateProducts();
 
-        int inputAmount = inputView.readInputAmount();
-        return new VendingMachine(products, inputAmount);
+        while (true) {
+            try {
+                int inputAmount = inputView.readInputAmount();
+                return new VendingMachine(products, inputAmount);
+            } catch (IllegalArgumentException e) {
+                outputView.printErrorMessage(e.getMessage());
+            }
+        }
+    }
+
+    private List<Product> generateProducts() {
+        while (true) {
+            try {
+                String inputProducts = inputView.readProductsInfo();
+                return ProductParser.parseProducts(inputProducts);
+            } catch (IllegalArgumentException e) {
+                outputView.printErrorMessage(e.getMessage());
+            }
+        }
     }
 
     private void processPurchases(VendingMachine machine) {
@@ -59,9 +81,16 @@ public class VendingmachineController {
     }
 
     private void processPurchase(VendingMachine machine) {
-        String purchaseProductName = inputView.readPurchaseProductName();
-        Product product = machine.findProductByName(purchaseProductName);
-        machine.purchaseProduct(product);
+        while (true) {
+            try {
+                String purchaseProductName = inputView.readPurchaseProductName();
+                Product product = machine.findProductByName(purchaseProductName);
+                machine.purchaseProduct(product);
+                return;
+            } catch (IllegalArgumentException e) {
+                outputView.printErrorMessage(e.getMessage());
+            }
+        }
     }
 
     private void displayChange(AmountHeld amountHeld, VendingMachine machine) {
