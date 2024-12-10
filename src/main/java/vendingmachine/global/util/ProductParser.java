@@ -16,7 +16,7 @@ public class ProductParser {
         for (String s : split) {
             Matcher matcher = pattern.matcher(s);
 
-            if (!matcher.find())
+            if (!matcher.find() || matcher.groupCount() != 3)
                 throw new IllegalArgumentException();
 
             String name = matcher.group(1);
