@@ -3,15 +3,12 @@ package vendingmachine.domain.dto;
 import java.util.Collections;
 import java.util.List;
 
-public class ChangeResponse {
+public record ChangeResponse(
+        List<CoinResponse> changeResponses
+) {
 
-    private final List<CoinResponse> changeResponses;
-
-    public ChangeResponse(List<CoinResponse> coinResponses) {
-        this.changeResponses = coinResponses;
-    }
-
-    public List<CoinResponse> getChangeResponses() {
+    @Override
+    public List<CoinResponse> changeResponses() {
         return Collections.unmodifiableList(changeResponses);
     }
 }

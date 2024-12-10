@@ -10,14 +10,14 @@ import vendingmachine.domain.dto.CoinResponse;
 public class OutputView {
     
     public void printChange(ChangeResponse response) {
-        List<CoinResponse> responses = response.getChangeResponses();
+        List<CoinResponse> responses = response.changeResponses();
 
         System.out.println("잔돈");
         responses.forEach(this::printCoinAndQuantity);
     }
 
     public void printAmountHeld(AmountHeldResponse response) {
-        List<CoinResponse> coinResponses = response.getAmountHeld();
+        List<CoinResponse> coinResponses = response.amountHeld();
 
         System.out.println();
         System.out.println("자판기가 보유한 동전");
@@ -28,8 +28,8 @@ public class OutputView {
 
     private void printCoinAndQuantity(CoinResponse coinResponse) {
         System.out.printf("%d원 - %d개",
-                coinResponse.getCoin(),
-                coinResponse.getQuantity()
+                coinResponse.coin(),
+                coinResponse.quantity()
         );
         System.out.println();
     }
