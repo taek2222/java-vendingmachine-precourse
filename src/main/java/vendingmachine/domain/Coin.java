@@ -17,6 +17,10 @@ public enum Coin {
         this.amount = amount;
     }
 
+    public int getDivideByAmount(int amount) {
+        return amount / this.amount;
+    }
+
     public static Coin generateRandomCoin(int amount) {
         List<Coin> coins = Arrays.stream(values())
                 .filter(coin -> coin.amount <= amount)

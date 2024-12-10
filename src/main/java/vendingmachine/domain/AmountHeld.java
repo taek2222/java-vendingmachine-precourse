@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 import vendingmachine.domain.dto.AmountHeldResponse;
+import vendingmachine.domain.dto.ChangeResponse;
 import vendingmachine.domain.dto.CoinResponse;
 
 public class AmountHeld {
@@ -18,15 +19,50 @@ public class AmountHeld {
         this.coins = createRandomCoins(amount);
     }
 
+    public ChangeResponse getChange(int changeAmount) {
+        List<CoinResponse> coinResponses = new ArrayList<>();
+        for (Map.Entry<Coin, Integer> entry : coins.entrySet()) {
+            if (entry.getKey().getAmount() > changeAmount) {
+                continue;
+            }
+
+            int divide = entry.getKey().getDivideByAmount(changeAmount);
+            if (divide < entry.getValue()) { // 남아있는 동전이 더 클 때
+                changeAmount -= divide * entry.getKey().getAmount();
+                coins.put(entry.getKey(), entry.getValue() - divide);
+                coinResponses.add(createCoinResponse(
+                        entry.getKey().getAmount(),
+                        divide
+                ));
+                continue;
+            }
+
+            coinResponses.add(createCoinResponse(
+                    entry.getKey().getAmount(),
+                    entry.getValue()
+            ));
+            coins.put(entry.getKey(), 0);
+        }
+
+        return new ChangeResponse(coinResponses);
+    }
+
     public AmountHeldResponse createResponse() {
         List<CoinResponse> coinResponses = new ArrayList<>();
         for (Map.Entry<Coin, Integer> entry : coins.entrySet()) {
-            coinResponses.add(new CoinResponse(
+            coinResponses.add(createCoinResponse(
                     entry.getKey().getAmount(),
                     entry.getValue()
             ));
         }
         return new AmountHeldResponse(coinResponses);
+    }
+
+    private CoinResponse createCoinResponse(int amount, int quantity) {
+        return new CoinResponse(
+                amount,
+                quantity
+        );
     }
 
     private Map<Coin, Integer> createRandomCoins(int amount) {

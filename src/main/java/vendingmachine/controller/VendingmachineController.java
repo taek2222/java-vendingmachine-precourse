@@ -5,6 +5,7 @@ import vendingmachine.domain.AmountHeld;
 import vendingmachine.domain.Product;
 import vendingmachine.domain.VendingMachine;
 import vendingmachine.domain.dto.AmountHeldResponse;
+import vendingmachine.domain.dto.ChangeResponse;
 import vendingmachine.global.util.ProductParser;
 import vendingmachine.view.InputView;
 import vendingmachine.view.OutputView;
@@ -42,5 +43,8 @@ public class VendingmachineController {
             Product product = machine.findProductByName(purchaseProductName);
             machine.purchaseProduct(product);
         }
+
+        ChangeResponse responses = amountHeld.getChange(machine.getInputAmount());
+        outputView.printChange(responses);
     }
 }

@@ -4,21 +4,34 @@ import static vendingmachine.global.constant.MessageConstant.NEW_LINE;
 
 import java.util.List;
 import vendingmachine.domain.dto.AmountHeldResponse;
+import vendingmachine.domain.dto.ChangeResponse;
 import vendingmachine.domain.dto.CoinResponse;
 
 public class OutputView {
+    
+    public void printChange(ChangeResponse response) {
+        List<CoinResponse> responses = response.getChangeResponses();
+
+        System.out.println("잔돈");
+        responses.forEach(this::printCoinAndQuantity);
+    }
 
     public void printAmountHeld(AmountHeldResponse response) {
         List<CoinResponse> coinResponses = response.getAmountHeld();
 
         System.out.println();
+        System.out.println("자판기가 보유한 동전");
         for (CoinResponse coinResponse : coinResponses) {
-            System.out.printf("%d원 - %d개",
-                    coinResponse.getCoin(),
-                    coinResponse.getQuantity()
-            );
-            System.out.println();
+            printCoinAndQuantity(coinResponse);
         }
+    }
+
+    private void printCoinAndQuantity(CoinResponse coinResponse) {
+        System.out.printf("%d원 - %d개",
+                coinResponse.getCoin(),
+                coinResponse.getQuantity()
+        );
+        System.out.println();
     }
 
     public void printInputAmount(int amount) {
